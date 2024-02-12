@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { posts } from "~/server/db/schema";
+import { countries, posts } from "~/server/db/schema";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -27,5 +27,9 @@ export const postRouter = createTRPCRouter({
     return ctx.db.query.posts.findFirst({
       orderBy: (posts, { desc }) => [desc(posts.createdAt)],
     });
+  }),
+
+  getCountries: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.db.select().from(countries);
   }),
 });

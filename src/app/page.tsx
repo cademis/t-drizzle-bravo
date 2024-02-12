@@ -7,6 +7,7 @@ import { api } from "~/trpc/server";
 export default async function Home() {
   noStore();
   const hello = await api.post.hello.query({ text: "from tRPC" });
+  const countries = await api.post.getCountries.query();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
@@ -32,10 +33,7 @@ export default async function Home() {
             target="_blank"
           >
             <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
+            <div className="text-lg">{JSON.stringify(countries)}</div>
           </Link>
         </div>
         <div className="flex flex-col items-center gap-2">
